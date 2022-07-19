@@ -25,7 +25,7 @@ public class StickersMaker {
         //escrever uma frase na nova imagem
 
         //escrever a nova imagem em um arquivo
-        ImageIO.write(novaImagem, "png", new File("saída/figurinha.png"));
+        ImageIO.write(novaImagem, "png", new File("saída/figurinha.png")); //Criar o diretório por código (Desafio)
 
     }
 
