@@ -19,11 +19,18 @@ public class StickersMaker {
 
         //copiar imagem original para nova imagem (em memória)
         Graphics2D graphics = (Graphics2D) novaImagem.getGraphics();
-        graphics.drawImage(imageOriginal, 0,0);
+        graphics.drawImage(imageOriginal, 0,0, null);
 
 
         //escrever uma frase na nova imagem
 
         //escrever a nova imagem em um arquivo
+        ImageIO.write(novaImagem, "png", new File("saída/figurinha.png"));
+
+    }
+
+    public static void main(String[] args) throws Exception{
+        StickersMaker geradora = new StickersMaker();
+        geradora.cria();
     }
 }
