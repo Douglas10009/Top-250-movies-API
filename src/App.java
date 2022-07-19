@@ -1,4 +1,6 @@
+import java.io.InputStream;
 import java.net.URI;
+import java.net.URL;
 import java.net.http.HttpClient;
 import java.net.http.HttpRequest;
 import java.net.http.HttpResponse;
@@ -37,13 +39,22 @@ public class App {
 
         //exibir e manipular os dados
         for (Map<String,String> filme : listaDeFilmes) {
-            System.out.print(ANSI_GREEN + ANSI_BOLD + "TÍTULO: " + ANSI_RESET);
-            System.out.println(filme.get("title"));
-            System.out.print(ANSI_GREEN + "IMAGEM: " + ANSI_RESET);
-            System.out.println(filme.get("image"));
+            // System.out.print(ANSI_GREEN + "IMAGEM: " + ANSI_RESET);
 
+            String urlImagem = filme.get("image"); //Pega a URL da imagem
+            String titulo = filme.get("title"); //Pega a string do nome do filme
+            String nomeArquivo = "saída/" + titulo + ".png";
+
+            InputStream inputStream = new URL(urlImagem).openStream();
+            StickersMaker geradora = new StickersMaker();
+            geradora.cria(inputStream, nomeArquivo);
+
+
+            System.out.print(ANSI_GREEN + ANSI_BOLD + "TÍTULO: " + ANSI_RESET);
+            System.out.println(titulo);
+            
             Float class_num = Float.parseFloat(filme.get("imDbRating"));
-            if (class_num >= 8) {
+            if (class_num >= 8) {//Para formatar as cores da classificação
                 System.out.print(ANSI_BLACK + ANSI_YELLOW_BACKGROUND + "CLASSIFICAÇÃO: ");
                 System.out.println(filme.get("imDbRating")  + ANSI_RESET);
             }
