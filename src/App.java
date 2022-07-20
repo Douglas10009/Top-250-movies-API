@@ -1,10 +1,5 @@
 import java.io.InputStream;
-import java.net.URI;
 import java.net.URL;
-import java.net.http.HttpClient;
-import java.net.http.HttpRequest;
-import java.net.http.HttpResponse;
-import java.net.http.HttpResponse.BodyHandlers;
 import java.util.List;
 import java.util.Map;
 
@@ -26,22 +21,9 @@ public class App {
         // String url = "https://alura-imdb-api.herokuapp.com/movies"; //Um tipo genérico de URL
 
         String url = "https://api.mocki.io/v2/549a5d8b/NASA-APOD"; //Um tipo genérico de URL
-        URI endereco = URI.create(url);
-        var client = HttpClient.newHttpClient();  //Poderia ser HttpClient ao invez de var
-        var request = HttpRequest.newBuilder(endereco).GET().build();
-        HttpResponse<String> response = client.send(request, BodyHandlers.ofString()); //Poderia ser substituido por var, mas não o fez para deixar o tipo claro
-        String body = response.body();
-
-        // System.out.println(body);
+        var http = new ClientHttp();
+        String json = http.buscaDados(url);
         
-        //extrair somente os dados que interessam (título, poster, classificação) [Parciar os dados]
-        var parser = new JsonParser();
-        List<Map<String, String>> listaDeConteudos = parser.parse(body);
-
-        // System.out.println(listaDeFilmes.size()); //Tamanho da lista
-        // System.out.println(listaDeFilmes.get(0)); //Pega o primeiro item da lista
-        
-
         //exibir e manipular os dados
 
         // for (Map<String,String> filme : listaDeFilmes) {
@@ -76,3 +58,5 @@ public class App {
 
     }
 }
+
+//Erros conhecidos: Algumas imagens não rodam
