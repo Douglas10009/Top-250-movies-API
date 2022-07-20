@@ -36,7 +36,7 @@ public class App {
         
         //extrair somente os dados que interessam (título, poster, classificação) [Parciar os dados]
         var parser = new JsonParser();
-        List<Map<String, String>> listaDeFilmes = parser.parse(body);
+        List<Map<String, String>> listaDeConteudos = parser.parse(body);
 
         // System.out.println(listaDeFilmes.size()); //Tamanho da lista
         // System.out.println(listaDeFilmes.get(0)); //Pega o primeiro item da lista
@@ -48,12 +48,12 @@ public class App {
 
         for (int i = 0; i < 3; i++) {
 
-            Map<String, String> filme = listaDeFilmes.get(i);
+            Map<String, String> conteudo = listaDeConteudos.get(i);
             // String urlImagem = filme.get("image"); //Pega a URL da imagem
             
             // String urlImagem  =filme.get("image").replaceAll("(@+)(.*).jpg$", "$1.jpg");
-            String urlImagem  =filme.get("url"); //.replaceAll("(@+)(.*).jpg$", "$1.jpg");
-            String titulo = filme.get("title"); //Pega a string do nome do filme
+            String urlImagem  =conteudo.get("url").replaceAll("(@+)(.*).jpg$", "$1.jpg");
+            String titulo = conteudo.get("title"); //Pega a string do nome do filme
             String nomeArquivo = "saída/" + titulo + ".png";
             InputStream inputStream = new URL(urlImagem).openStream();
             StickersMaker geradora = new StickersMaker();
