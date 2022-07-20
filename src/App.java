@@ -22,42 +22,54 @@ public class App {
     
     public static void main(String[] args) throws Exception {
         //fazer uma conexão HTTP (Protocolo para se comunicar na Web) e buscar os top 25o filmes
-        String url = "https://alura-imdb-api.herokuapp.com/movies"; //Um tipo genérico de URL
+
+        // String url = "https://alura-imdb-api.herokuapp.com/movies"; //Um tipo genérico de URL
+
+        String url = "https://api.mocki.io/v2/549a5d8b/NASA-APOD"; //Um tipo genérico de URL
         URI endereco = URI.create(url);
         var client = HttpClient.newHttpClient();  //Poderia ser HttpClient ao invez de var
         var request = HttpRequest.newBuilder(endereco).GET().build();
         HttpResponse<String> response = client.send(request, BodyHandlers.ofString()); //Poderia ser substituido por var, mas não o fez para deixar o tipo claro
         String body = response.body();
+
         // System.out.println(body);
         
         //extrair somente os dados que interessam (título, poster, classificação) [Parciar os dados]
         var parser = new JsonParser();
         List<Map<String, String>> listaDeFilmes = parser.parse(body);
+
         // System.out.println(listaDeFilmes.size()); //Tamanho da lista
-        // System.out.println(listaDeFilmes.get(0));
+        // System.out.println(listaDeFilmes.get(0)); //Pega o primeiro item da lista
         
 
         //exibir e manipular os dados
-        for (Map<String,String> filme : listaDeFilmes) {
-            // System.out.print(ANSI_GREEN + "IMAGEM: " + ANSI_RESET);
 
-            String urlImagem = filme.get("image"); //Pega a URL da imagem
+        // for (Map<String,String> filme : listaDeFilmes) {
+
+        for (int i = 0; i < 3; i++) {
+
+            Map<String, String> filme = listaDeFilmes.get(i);
+            // String urlImagem = filme.get("image"); //Pega a URL da imagem
+            
+            // String urlImagem  =filme.get("image").replaceAll("(@+)(.*).jpg$", "$1.jpg");
+            String urlImagem  =filme.get("url"); //.replaceAll("(@+)(.*).jpg$", "$1.jpg");
             String titulo = filme.get("title"); //Pega a string do nome do filme
             String nomeArquivo = "saída/" + titulo + ".png";
-
             InputStream inputStream = new URL(urlImagem).openStream();
             StickersMaker geradora = new StickersMaker();
+
             geradora.cria(inputStream, nomeArquivo);
 
-
+            System.out.print(ANSI_GREEN + ANSI_BOLD + "TOP " + "#" + (i+1) + ANSI_RESET );
+            System.out.println();
             System.out.print(ANSI_GREEN + ANSI_BOLD + "TÍTULO: " + ANSI_RESET);
             System.out.println(titulo);
-            
-            Float class_num = Float.parseFloat(filme.get("imDbRating"));
-            if (class_num >= 8) {//Para formatar as cores da classificação
-                System.out.print(ANSI_BLACK + ANSI_YELLOW_BACKGROUND + "CLASSIFICAÇÃO: ");
-                System.out.println(filme.get("imDbRating")  + ANSI_RESET);
-            }
+
+            // Float class_num = Float.parseFloat(filme.get("imDbRating"));
+            // if (class_num >= 8) {//Para formatar as cores da classificação
+            //     System.out.print(ANSI_BLACK + ANSI_YELLOW_BACKGROUND + "CLASSIFICAÇÃO: ");
+            //     System.out.println(filme.get("imDbRating")  + ANSI_RESET);
+            // }
 
             System.out.println();
         }
