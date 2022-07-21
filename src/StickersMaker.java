@@ -40,3 +40,5 @@ public class StickersMaker {
 
     }
 }
+
+//Desafios: Centralizar o texto "independente" do texto

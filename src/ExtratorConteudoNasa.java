@@ -2,7 +2,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
-public class ExtratorConteudoNasa {
+public class ExtratorConteudoNasa implements ExtratorConteudo{
     public List<Conteudo> extraiConteudos(String json){
         //extrair somente os dados que interessam (título, poster, classificação) [Parciar os dados]
         var parser = new JsonParser();

@@ -1,7 +1,6 @@
 import java.io.InputStream;
 import java.net.URL;
 import java.util.List;
-import java.util.Map;
 
 public class App {
 
@@ -17,15 +16,17 @@ public class App {
     
     public static void main(String[] args) throws Exception {
         //fazer uma conexão HTTP (Protocolo para se comunicar na Web) e buscar os top 25o filmes
+        String url = "https://alura-imdb-api.herokuapp.com/movies"; //Um tipo genérico de URL
+        ExtratorConteudo extrator = new ExtratorConteudoIMDb();
 
-        // String url = "https://alura-imdb-api.herokuapp.com/movies"; //Um tipo genérico de URL
 
-        String url = "https://api.mocki.io/v2/549a5d8b/NASA-APOD"; //Um tipo genérico de URL
+        // String url = "https://api.mocki.io/v2/549a5d8b/NASA-APOD"; //Um tipo genérico de URL
+        // ExtratorConteudo extrator = new ExtratorConteudoNasa();
+
         var http = new ClientHttp();
         String json = http.buscaDados(url);
         
         //exibir e manipular os dados
-        ExtratorConteudoNasa extrator = new ExtratorConteudoNasa();
         List<Conteudo> conteudos = extrator.extraiConteudos(json);
 
         // for (Map<String,String> filme : listaDeFilmes) {
@@ -56,4 +57,6 @@ public class App {
     }
 }
 
-//Erros conhecidos: Algumas imagens não rodam
+//Erros conhecidos: Algumas imagens não rodam, que tenham ":"
+
+//Desafios: Colocar a legenda com o título da imagem // Colocar a legenda o título do autor
