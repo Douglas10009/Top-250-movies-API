@@ -25,19 +25,16 @@ public class App {
         String json = http.buscaDados(url);
         
         //exibir e manipular os dados
+        ExtratorConteudoNasa extrator = new ExtratorConteudoNasa();
+        List<Conteudo> conteudos = extrator.extraiConteudos(json);
 
         // for (Map<String,String> filme : listaDeFilmes) {
 
         for (int i = 0; i < 3; i++) {
 
-            Map<String, String> conteudo = listaDeConteudos.get(i);
-            // String urlImagem = filme.get("image"); //Pega a URL da imagem
-            
-            // String urlImagem  =filme.get("image").replaceAll("(@+)(.*).jpg$", "$1.jpg");
-            String urlImagem  =conteudo.get("url").replaceAll("(@+)(.*).jpg$", "$1.jpg");
-            String titulo = conteudo.get("title"); //Pega a string do nome do filme
-            String nomeArquivo = "saída/" + titulo + ".png";
-            InputStream inputStream = new URL(urlImagem).openStream();
+            Conteudo conteudo = conteudos.get(i);
+            String nomeArquivo = "saída/" + conteudo.getTitulo() + ".png";
+            InputStream inputStream = new URL(conteudo.getUrlImagem()).openStream();
             StickersMaker geradora = new StickersMaker();
 
             geradora.cria(inputStream, nomeArquivo);
@@ -45,7 +42,7 @@ public class App {
             System.out.print(ANSI_GREEN + ANSI_BOLD + "TOP " + "#" + (i+1) + ANSI_RESET );
             System.out.println();
             System.out.print(ANSI_GREEN + ANSI_BOLD + "TÍTULO: " + ANSI_RESET);
-            System.out.println(titulo);
+            System.out.println(conteudo.getTitulo());
 
             // Float class_num = Float.parseFloat(filme.get("imDbRating"));
             // if (class_num >= 8) {//Para formatar as cores da classificação

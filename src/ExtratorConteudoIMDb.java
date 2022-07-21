@@ -2,7 +2,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
-public class ExtratorConteudoNasa {
+public class ExtratorConteudoIMDb {
     public List<Conteudo> extraiConteudos(String json){
         //extrair somente os dados que interessam (título, poster, classificação) [Parciar os dados]
         var parser = new JsonParser();
@@ -13,7 +13,8 @@ public class ExtratorConteudoNasa {
         //popular a lista de conteudos
         for (Map<String, String> atributos : listaDeAtributos) {
             String titulo = atributos.get("title"); //Pega a string do nome do filme
-            String urlImagem = atributos.get("url");
+            String urlImagem = atributos.get("image").replaceAll("(@+)(.*).jpg$", "$1.jpg");
+            // String classificacao = atributos.get("key")
             Conteudo conteudo = new Conteudo(titulo, urlImagem);
 
             conteudos.add(conteudo); //singular e plural para tratar a lista e os objetos
